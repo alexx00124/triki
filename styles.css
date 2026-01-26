@@ -1,0 +1,276 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background: #1f2937;
+    color: white;
+    margin: 0;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+h1 {
+    color: white;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    letter-spacing: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.score-board {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 25px;
+}
+
+.player-score {
+    background: #4b5563;
+    padding: 20px 35px;
+    border-radius: 12px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    min-width: 140px;
+    text-align: center;
+}
+
+.player-score.active {
+    background: #6b7280;
+    transform: scale(1.02);
+    transition: all 0.3s ease;
+}
+
+.player-score div:first-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.player-score span {
+    display: block;
+    font-size: 2.5rem;
+    margin-top: 5px;
+    font-weight: 700;
+}
+
+.status-text {
+    color: white;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+#game {
+    width: 426px;
+    height: 426px;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    background: #1a2332;
+    margin: 0 auto;
+    padding: 0;
+}
+
+#game .cell {
+    width: 140px;
+    height: 140px;
+    font-size: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #1f2937;
+    border: 2px solid #ffffff;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    font-weight: 300;
+}
+
+#game .cell:hover:not([data-symbol]) {
+    background: #2a3342;
+}
+
+/* Estilos para X y O con símbolos ::before */
+.cell {
+    color: transparent;
+}
+
+.cell::before {
+    content: attr(data-symbol);
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* X roja */
+.cell[data-symbol="X"]::before {
+    content: '';
+    width: 80px;
+    height: 80px;
+    background: 
+        linear-gradient(45deg, transparent 38%, #ef4444 38%, #ef4444 62%, transparent 62%),
+        linear-gradient(-45deg, transparent 38%, #ef4444 38%, #ef4444 62%, transparent 62%);
+    animation: drawX 0.3s ease-out;
+}
+
+/* O circular - en verde */
+.cell[data-symbol="O"]::before {
+    content: '';
+    width: 80px;
+    height: 80px;
+    border: 14px solid #4ec14e;
+    border-radius: 50%;
+    animation: drawO 0.3s ease-out;
+}
+
+@keyframes drawX {
+    from {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes drawO {
+    from {
+        transform: scale(0);
+        opacity: 0;
+        border-width: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+        border-width: 14px;
+    }
+}
+
+#linea {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 420px;
+    height: 6px;
+    background: white;
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 10;
+    pointer-events: none;
+}
+
+@keyframes drawLine {
+    from {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+#results {
+    margin-top: 25px;
+    height: 2.5rem;
+    font-size: 1.6rem;
+    color: #ffffff;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+    letter-spacing: 1px;
+}
+
+.buttons {
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    background: #4b5563;
+    border: none;
+    color: white;
+    padding: 14px 28px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+    min-width: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+button:hover {
+    background: #6b7280;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.winner-animation {
+    animation: celebrate 0.6s ease-in-out;
+}
+
+.material-symbols-outlined.winner-icon {
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 40;
+    color: gold;
+    margin-right: 12px;
+    animation: pulse 1s infinite alternate;
+}
+
+@keyframes celebrate {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    25% {
+        transform: translateY(-5px) scale(1.05);
+    }
+    75% {
+        transform: translateY(-5px) scale(1.05);
+    }
+}
+
+@keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.2); }
+}
